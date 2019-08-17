@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang=ja>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="サンプルアプリケーション">
+        <title>SampleApp</title>
+        <link rel="stylesheet" href="//localhost:8080/static/css/style.css">
+    </head>
+    <body>
+    <form action="/login" method="POST">
+        <h1>Request to login service.</h1>
+        LoginID:<input type="text" name="loginId"><br>
+        Password:<input type="password" name="password"><br>
+        <input type="submit" value="send">
+    </form>
+    <br>
+    <br>
+    <!--<form action="/regist" method="POST">
+        <h1>Regist user.</h1>
+        LoginID:<input type="text" name="loginId"><br>
+        Password:<input type="password" name="password">
+        name:<input type="text" name="username">
+        <input type="submit" value="regist">
+    </form>-->
+    </body>
+</html>

@@ -1,0 +1,11 @@
+[Mysql]
+mysqlhost = "127.0.0.1"
+mysqlport = "3206"
+mysqluser = "mysqldb"
+mysqlpass = "mysqldb"
+mysqldbname = "mysqldb"
+
+[Redis]
+redishost = "192.168.179.8"
+redisport = "6379"
+redisprotocol = "tcp"
