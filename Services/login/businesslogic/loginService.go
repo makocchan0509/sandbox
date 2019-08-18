@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"projects/Services/common/dao"
 	"projects/Services/common/data"
+	"projects/Services/common/net"
 )
 
 func LoginService(w http.ResponseWriter, r *http.Request) {
@@ -39,13 +40,17 @@ func LoginService(w http.ResponseWriter, r *http.Request) {
 	//Parsed request JSON parameter
 	log.Println("info: Received parameter >--", loginInfo)
 
-	var loginResult data.LoginRes
+	var userInfo data.Users
+
+	userInfo.Id = loginInfo.LoginId
+	userInfo.Password = loginInfo.Password
 
 	//Get connection from mysql
 	conn := dao.GetConnectionMysql()
 
-	var name string
-	err = conn.QueryRow("select name from users where id = ? and password = ?", loginInfo.LoginId, loginInfo.Password).Scan(&name)
+	err = conn.QueryRow("select user_type from users where id = ? and password = ?", userInfo.Id, userInfo.Password).Scan(&userInfo.User_type)
+
+	var loginResult data.LoginRes
 
 	//Not found user.
 	if err != nil {
@@ -59,29 +64,29 @@ func LoginService(w http.ResponseWriter, r *http.Request) {
 
 	} else {
 
-		//Get connection Redis
-		rconn := dao.GetConnectionRedis()
+		sessionId, err := net.CreateSessionId()
 
-		//Check exists key(login key)
-		i := dao.ExistsRedis(loginInfo.LoginId, rconn)
-
-		if i == 1 {
-			log.Println("info: Exists key", loginInfo.LoginId)
-			log.Println("info: Skip set key")
-		} else {
-			//Set key
-			sessionValue := loginInfo.Password
-			dao.SetRedis(loginInfo.LoginId, sessionValue, rconn)
-
-			//Set expire time to key
-			dao.ExpireRedis(loginInfo.LoginId, 120, rconn)
-			log.Println("info: Create key into CVS.", loginInfo.LoginId)
+		if err != nil {
+			log.Println("error: ", err.Error())
+			w.WriteHeader(http.StatusBadRequest)
 		}
-		//Close Redis connection.
-		defer dao.CloseConnectionRedis(rconn)
+
+		userValue := userInfo.Id
+		userValue += ","
+		userValue += userInfo.User_type
+		log.Println("info: userValue>--", userValue)
+
+		err = net.StartSession(sessionId, userValue)
+
+		if err != nil {
+			log.Println("error: ", err.Error())
+			w.WriteHeader(http.StatusBadRequest)
+		}
 
 		loginResult.Result = "00"
 		loginResult.Code = "LoginSuccess"
+		loginResult.SessionId = sessionId
+		loginResult.UserType = userInfo.User_type
 		loginResult.ReqId = loginInfo.LoginId
 		loginResult.ReqPass = loginInfo.Password
 	}

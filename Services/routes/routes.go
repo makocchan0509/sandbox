@@ -17,7 +17,7 @@ func Index(ctx *gin.Context) {
 }
 
 //Login service.
-func Login(ctx *gin.Context) {
+func Login(ctx *gin.Context, disp bool) {
 	id := ctx.PostForm("loginId")
 	password := ctx.PostForm("password")
 
@@ -58,10 +58,5 @@ func Login(ctx *gin.Context) {
 	log.Println("info: Parsed response data -->", loginRes)
 
 	ctx.JSON(http.StatusOK, loginRes)
-
-}
-
-//Login and display screen service.
-func LoginDS(ctx *gin.Context) {
 
 }

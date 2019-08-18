@@ -1,13 +1,12 @@
 package dao
 
 import (
-	"log"
 	"projects/Services/common/properties"
 
 	"github.com/garyburd/redigo/redis"
 )
 
-func GetConnectionRedis() redis.Conn {
+func GetConnectionRedis() (redis.Conn, error) {
 	//Connect to Redis
 
 	prop := properties.GetProp()
@@ -17,30 +16,21 @@ func GetConnectionRedis() redis.Conn {
 	redisPrtc := prop.Redis.RedisPrtc
 
 	rconn, err := redis.Dial(redisPrtc, redisHost+":"+redisPort)
-	if err != nil {
-		log.Println("error: ", err.Error())
-	}
-	return rconn
+	return rconn, err
 }
 
 func SetRedis(key string, value string, rconn redis.Conn) {
 	rconn.Do("SET", key, value)
 }
 
-func GetRedis(key string, rconn redis.Conn) string {
+func GetRedis(key string, rconn redis.Conn) (string, error) {
 	s, err := redis.String(rconn.Do("GET", key))
-	if err != nil {
-		log.Println("error: ", err.Error())
-	}
-	return s
+	return s, err
 }
 
-func ExistsRedis(key string, rconn redis.Conn) int {
+func ExistsRedis(key string, rconn redis.Conn) (int, error) {
 	i, err := redis.Int(rconn.Do("EXISTS", key))
-	if err != nil {
-		log.Println("error: ", err.Error())
-	}
-	return i
+	return i, err
 }
 
 func ExpireRedis(key string, sec int, rconn redis.Conn) {

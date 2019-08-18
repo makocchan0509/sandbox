@@ -6,8 +6,10 @@ type LoginReq struct {
 }
 
 type LoginRes struct {
-	Result  string `json:"result"`
-	Code    string `json:"code"`
-	ReqId   string `json:"reqId"`
-	ReqPass string `json:"reqPass"`
+	Result    string `json:"result"`
+	Code      string `json:"code"`
+	SessionId string `json:"sessionId"`
+	UserType  string `json:"userType"`
+	ReqId     string `json:"reqId"`
+	ReqPass   string `json:"reqPass"`
 }
