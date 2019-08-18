@@ -11,13 +11,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//Display index page.
-func Index(ctx *gin.Context) {
-	ctx.HTML(http.StatusOK, "index.html", gin.H{})
-}
-
 //Login service.
-func Login(ctx *gin.Context, disp bool) {
+func Login(ctx *gin.Context) {
 	id := ctx.PostForm("loginId")
 	password := ctx.PostForm("password")
 
