@@ -16,11 +16,13 @@ func LoginService(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		log.Println("error: Request is not POST method")
 		w.WriteHeader(http.StatusBadRequest)
+		return
 	}
 
 	if r.Header.Get("Content-Type") != "application/json" {
 		log.Println("error: Request is not JSON format.")
 		w.WriteHeader(http.StatusBadRequest)
+		return
 	}
 
 	var loginInfo data.LoginReq
@@ -31,11 +33,13 @@ func LoginService(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println("error: ", err.Error())
 		w.WriteHeader(http.StatusBadRequest)
+		return
 	}
 
 	if err := json.Unmarshal(req, &loginInfo); err != nil {
 		log.Println("error: ", err.Error())
 		w.WriteHeader(http.StatusBadRequest)
+		return
 	}
 	//Parsed request JSON parameter
 	log.Println("info: Received parameter >--", loginInfo)
@@ -104,6 +108,7 @@ func LoginService(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println("error: ", err.Error())
 		w.WriteHeader(http.StatusBadRequest)
+		return
 	}
 
 	w.Write(jr)

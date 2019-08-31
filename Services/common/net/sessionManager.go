@@ -25,6 +25,7 @@ func StartSession(sessionId string, sessionValue string) error {
 	//Set key
 	dao.SetRedis(sessionId, sessionValue, rconn)
 
+	//Session timer
 	expireSec := 180
 	//Set expire to key
 	dao.ExpireRedis(sessionId, expireSec, rconn)
@@ -33,4 +34,26 @@ func StartSession(sessionId string, sessionValue string) error {
 	//Close Redis connection.
 	defer dao.CloseConnectionRedis(rconn)
 	return err
+}
+
+func GetSession(sessionId string) (string, error) {
+	rconn, err := dao.GetConnectionRedis()
+
+	count, err := dao.ExistsRedis(sessionId, rconn)
+
+	var sessionVal string
+
+	if count == 1 {
+		log.Println("info: Exist session on CVS.", sessionId)
+		sessionVal, err = dao.GetRedis(sessionId, rconn)
+	} else {
+		sessionVal = ""
+	}
+	return sessionVal, err
+}
+
+func CheckSession(sessionId string) (int, error) {
+	rconn, err := dao.GetConnectionRedis()
+	count, err := dao.ExistsRedis(sessionId, rconn)
+	return count, err
 }

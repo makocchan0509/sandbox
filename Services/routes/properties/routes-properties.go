@@ -10,11 +10,12 @@ var prop Config
 var config Config
 
 type Config struct {
-	Login LoginConfig
+	Service ServiceConfig
 }
 
-type LoginConfig struct {
-	Url string `toml:"url"`
+type ServiceConfig struct {
+	LoginUrl string `toml:"loginUrl"`
+	InfoUrl  string `toml:"infoUrl"`
 }
 
 func Init() {

@@ -23,13 +23,18 @@ func main() {
 	log.Printf("info: Start Server. listen port --> 8090")
 
 	http.HandleFunc("/loginService", func(w http.ResponseWriter, r *http.Request) {
-
 		log.Printf("info: Received request " + "/loginService")
 		//w.Write([]byte("Called login service."))
 		businesslogic.LoginService(w, r)
-
 		log.Printf("info: Return to client " + "/loginService")
+	})
+
+	http.HandleFunc("/getSession", func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("info: Received request " + "/checkSession")
+		businesslogic.GetSession(w, r)
+		log.Printf("info: Return to client " + "/checkSession")
 
 	})
+
 	http.ListenAndServe(":8090", nil)
 }

@@ -1,2 +1,3 @@
-[login]
-url = "http://localhost:8090/loginService"
+[Service]
+loginUrl = "http://localhost:8090/loginService"
+infoUrl = "http://localhost:8091/getInfoService"

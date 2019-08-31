@@ -10,8 +10,9 @@ import (
 )
 
 func main() {
-	router := gin.Default()
 
+	// 妙子大好き！
+	router := gin.Default()
 	properties.Init()
 
 	colog.SetDefaultLevel(colog.LDebug)
@@ -22,8 +23,10 @@ func main() {
 	})
 	colog.Register()
 
-	//Rooting login,The service will return JSON.
+	router.OPTIONS("/:uri", routes.Options)
+
 	router.POST("/login", routes.Login)
+	router.POST("/getInfo", routes.GetInfoLists)
 
 	router.Run(":8085")
 }

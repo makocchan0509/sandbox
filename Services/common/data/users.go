@@ -6,8 +6,3 @@ type Users struct {
 	Name      string
 	User_type string
 }
-
-type UserValueObject struct {
-	Id        string
-	User_type string
-}

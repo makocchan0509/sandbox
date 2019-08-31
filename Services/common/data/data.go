@@ -13,3 +13,7 @@ type LoginRes struct {
 	ReqId     string `json:"reqId"`
 	ReqPass   string `json:"reqPass"`
 }
+
+type GetSessionReq struct {
+	SessionId string `json:"sessionId"`
+}
