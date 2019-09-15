@@ -5,13 +5,14 @@ import (
 	"projects/Services/routes"
 	"projects/Services/routes/properties"
 
+	_ "net/http/pprof"
+
 	"github.com/comail/colog"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 
-	// 妙子大好き！
 	router := gin.Default()
 	properties.Init()
 
@@ -27,6 +28,8 @@ func main() {
 
 	router.POST("/login", routes.Login)
 	router.POST("/getInfo", routes.GetInfoLists)
+	router.POST("/editInfo", routes.EditInfo)
+	router.POST("/checkSession", routes.CheckSession)
 
 	router.Run(":8085")
 }

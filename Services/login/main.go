@@ -6,6 +6,8 @@ import (
 	"projects/Services/common/properties"
 	"projects/Services/login/businesslogic"
 
+	_ "net/http/pprof"
+
 	"github.com/comail/colog"
 )
 
@@ -30,8 +32,15 @@ func main() {
 	})
 
 	http.HandleFunc("/getSession", func(w http.ResponseWriter, r *http.Request) {
-		log.Printf("info: Received request " + "/checkSession")
+		log.Printf("info: Received request " + "/getSession")
 		businesslogic.GetSession(w, r)
+		log.Printf("info: Return to client " + "/getSession")
+
+	})
+
+	http.HandleFunc("/checkSession", func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("info: Received request " + "/checkSession")
+		businesslogic.CheckSession(w, r)
 		log.Printf("info: Return to client " + "/checkSession")
 
 	})

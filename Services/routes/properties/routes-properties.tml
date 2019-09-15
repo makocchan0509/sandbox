@@ -1,3 +1,5 @@
 [Service]
 loginUrl = "http://localhost:8090/loginService"
 infoUrl = "http://localhost:8091/getInfoService"
+editInfoUrl = "http://localhost:8091/editInfoService"
+checkSessionUrl = "http://localhost:8090/checkSession"

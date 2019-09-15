@@ -9,3 +9,6 @@ mysqldbname = "mysqldb"
 redishost = "192.168.179.8"
 redisport = "6379"
 redisprotocol = "tcp"
+
+[Session]
+url = "http://localhost:8090/getSession"

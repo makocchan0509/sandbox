@@ -103,5 +103,82 @@ func GetInfoLists(ctx *gin.Context) {
 	}
 
 	log.Println("info: Parsed response data -->", infoRes)
-	ctx.JSON(http.StatusOK, res)
+	ctx.JSON(http.StatusOK, infoRes)
+}
+
+func CheckSession(ctx *gin.Context) {
+	util.CORSForGin(ctx)
+
+	var checkSessionReq data.CheckSessionReq
+
+	ctx.BindJSON(&checkSessionReq)
+
+	log.Println("info: Received parameter", checkSessionReq)
+
+	input, err := json.Marshal(checkSessionReq)
+	if err != nil {
+		log.Println("error: ", err.Error())
+		ctx.Status(404)
+	}
+
+	prop := properties.GetProp()
+
+	url := prop.Service.CheckSessionUrl
+
+	log.Println("info: Redirect URL --->", url)
+
+	res, err := net.JsonPostRequestSender(url, input)
+
+	if err != nil {
+		log.Println("error: ", err.Error())
+		ctx.Status(404)
+	}
+
+	var checkSessionRes data.CheckSessionRes
+
+	if err := json.Unmarshal(res, &checkSessionRes); err != nil {
+		log.Println("error: ", err.Error())
+	}
+
+	log.Println("info: Parsed response data -->", checkSessionRes)
+	ctx.JSON(http.StatusOK, checkSessionRes)
+}
+
+func EditInfo(ctx *gin.Context) {
+
+	util.CORSForGin(ctx)
+
+	var editInfoReq data.EditInfoReq
+
+	ctx.BindJSON(&editInfoReq)
+
+	log.Println("info: Received parameter", editInfoReq)
+
+	input, err := json.Marshal(editInfoReq)
+	if err != nil {
+		log.Println("error: ", err.Error())
+		ctx.Status(404)
+	}
+
+	prop := properties.GetProp()
+
+	url := prop.Service.EditInfoUrl
+
+	log.Println("info: Redirect URL --->", url)
+
+	res, err := net.JsonPostRequestSender(url, input)
+
+	if err != nil {
+		log.Println("error: ", err.Error())
+		ctx.Status(404)
+	}
+
+	var editInfoRes data.EditInfoRes
+
+	if err := json.Unmarshal(res, &editInfoRes); err != nil {
+		log.Println("error: ", err.Error())
+	}
+
+	log.Println("info: Parsed response data -->", editInfoRes)
+	ctx.JSON(http.StatusOK, editInfoRes)
 }

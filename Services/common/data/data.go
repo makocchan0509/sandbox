@@ -17,3 +17,11 @@ type LoginRes struct {
 type GetSessionReq struct {
 	SessionId string `json:"sessionId"`
 }
+
+type CheckSessionReq struct {
+	SessionId string `json:"sessionId"`
+}
+
+type CheckSessionRes struct {
+	Result string `json:"result"`
+}

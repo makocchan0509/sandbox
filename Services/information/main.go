@@ -5,12 +5,14 @@ import (
 	"net/http"
 	"projects/Services/common/properties"
 	"projects/Services/information/businesslogic"
+	"projects/Services/information/sqls"
 
 	"github.com/comail/colog"
 )
 
 func main() {
 	properties.Init()
+	sqls.Init()
 
 	colog.SetDefaultLevel(colog.LDebug)
 	colog.SetMinLevel(colog.LTrace)
@@ -28,6 +30,15 @@ func main() {
 		//w.Write([]byte("Called login service."))
 		businesslogic.GetInfoService(w, r)
 		log.Printf("info: Return to client " + "/getInfoService")
+
+	})
+
+	http.HandleFunc("/editInfoService", func(w http.ResponseWriter, r *http.Request) {
+
+		log.Printf("info: Received request " + "/editInfoService")
+		//w.Write([]byte("Called login service."))
+		businesslogic.EditInfoService(w, r)
+		log.Printf("info: Return to client " + "/editInfoService")
 
 	})
 	http.ListenAndServe(":8091", nil)

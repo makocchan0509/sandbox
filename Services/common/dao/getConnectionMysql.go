@@ -29,3 +29,22 @@ func GetConnectionMysql() *sql.DB {
 func CloseConnetionMysql(conn *sql.DB) {
 	defer conn.Close()
 }
+
+func TransactAndReturnData(conn *sql.DB, txFunc func(*sql.Tx) (interface{}, error)) (data interface{}, err error) {
+	tx, err := conn.Begin()
+	if err != nil {
+		return nil, err
+	}
+	defer func() {
+		if p := recover(); p != nil {
+			tx.Rollback()
+			panic(p)
+		} else if err != nil {
+			tx.Rollback()
+		} else {
+			err = tx.Commit()
+		}
+	}()
+	data, err = txFunc(tx)
+	return
+}

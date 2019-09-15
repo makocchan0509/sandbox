@@ -88,7 +88,7 @@ func LoginService(w http.ResponseWriter, r *http.Request) {
 		}
 
 		loginResult.Result = "00"
-		loginResult.Code = "LoginSuccess"
+		loginResult.Code = "Success"
 		loginResult.SessionId = sessionId
 		loginResult.UserType = userInfo.User_type
 		loginResult.ReqId = loginInfo.LoginId

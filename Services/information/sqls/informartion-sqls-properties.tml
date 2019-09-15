@@ -1,0 +1,5 @@
+[Sql]
+Select_InfomationList = "select information_id,title,contents,issue_user,update_date from informations where user_type = ? order by update_date desc"
+Insert_Information = "insert into informations (title,contents,issue_user,user_type,update_date,create_date) values(?,?,?,?,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)"
+Update_Information = "update informations set title =?,contents=?,issue_user=?,update_date=CURRENT_TIMESTAMP where information_id = ?"
+Delete_Information = "delete from informations where information_id= ?"

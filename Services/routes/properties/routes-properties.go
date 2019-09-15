@@ -14,8 +14,10 @@ type Config struct {
 }
 
 type ServiceConfig struct {
-	LoginUrl string `toml:"loginUrl"`
-	InfoUrl  string `toml:"infoUrl"`
+	LoginUrl        string `toml:"loginUrl"`
+	InfoUrl         string `toml:"infoUrl"`
+	EditInfoUrl     string `toml:"editInfoUrl"`
+	CheckSessionUrl string `toml:"checkSessionUrl"`
 }
 
 func Init() {

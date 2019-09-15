@@ -10,8 +10,9 @@ var prop Config
 var config Config
 
 type Config struct {
-	Mysql MysqlConfig
-	Redis RedisConfig
+	Mysql   MysqlConfig
+	Redis   RedisConfig
+	Session SessionConfig
 }
 
 type MysqlConfig struct {
@@ -26,6 +27,10 @@ type RedisConfig struct {
 	RedisHost string `toml:"redishost"`
 	RedisPort string `toml:"redisport"`
 	RedisPrtc string `toml:"redisprotocol"`
+}
+
+type SessionConfig struct {
+	Url string `toml:"url"`
 }
 
 func Init() {

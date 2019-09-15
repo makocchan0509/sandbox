@@ -26,7 +26,7 @@ func StartSession(sessionId string, sessionValue string) error {
 	dao.SetRedis(sessionId, sessionValue, rconn)
 
 	//Session timer
-	expireSec := 180
+	expireSec := 300
 	//Set expire to key
 	dao.ExpireRedis(sessionId, expireSec, rconn)
 	log.Println("info: Create key into CVS.", sessionId)
