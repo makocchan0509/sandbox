@@ -5,9 +5,8 @@ import (
 	"log"
 	"net/http"
 	"projects/Services/common/data"
-	"projects/Services/common/net"
+	util "projects/Services/common/net"
 	"projects/Services/routes/properties"
-	"projects/Services/routes/util"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,7 +15,7 @@ import (
 func Options(ctx *gin.Context) {
 
 	log.Println("info: Called OPTONS method.")
-	util.CORSForGin(ctx)
+	net.CORSForGin(ctx)
 	ctx.Status(200)
 }
 
