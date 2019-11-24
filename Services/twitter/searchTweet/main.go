@@ -196,7 +196,6 @@ func premiumSearch(ctx *gin.Context) {
 		var next = ""
 		next = result.Next
 		if next != "" {
-			//fmt.Print("Nextあり--------------")
 			//Nextをリクエストに設定
 			requestNext.Next = next
 			encodedNew, err := json.Marshal(requestNext)
@@ -220,10 +219,10 @@ func premiumSearch(ctx *gin.Context) {
 		}
 
 	}
-	for _, tweet := range resultTweets {
-		log.Println("info: tweet start")
-		log.Println("info: ", tweet.Text)
-	}
+	// for _, tweet := range resultTweets {
+	// 	log.Println("info: tweet start")
+	// 	log.Println("info: ", tweet.Text)
+	// }
 
 	ctx.JSON(http.StatusOK, resultTweets)
 
