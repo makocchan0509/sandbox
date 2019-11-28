@@ -143,9 +143,9 @@ type uploadRes struct {
 }
 
 type dynamoData struct {
-	ID    int64     `json:"id" dynamo:"id"`
-	Query string    `json:"query" dynamo:"query"`
-	Tweet tweetList `json:"tweet" dynamo:"tweet"`
+	ID    int64       `json:"id" dynamo:"id"`
+	Query string      `json:"query" dynamo:"query"`
+	Tweet interface{} `json:"tweet" dynamo:"tweet"`
 }
 
 type tweetList struct {

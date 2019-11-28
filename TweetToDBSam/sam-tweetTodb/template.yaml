@@ -44,8 +44,8 @@ Resources:
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
           REGION: ap-northeast-1
-          S3_ENDPOINT: http://s3-ap-northeast-1.amazonaws.com/
-          S3_BUCKET: masem.storage.s3/fromDynamo
+          S3_ENDPOINT: http://s3-ap-northeast-1.amazonaws.com/masem.storage.s3
+          S3_BUCKET: fromDynamo
       Policies: 
         - AmazonDynamoDBFullAccess
         - AmazonS3FullAccess

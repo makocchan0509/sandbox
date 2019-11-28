@@ -12,7 +12,7 @@ Resources:
   TweetToDynamoFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://masem.storage.sam.deploy/e65d15be09e7b6aee6b5e6fa7fd0cffb
+      CodeUri: s3://masem.storage.sam.deploy/3113644e2165da4cc4ccf79e5bd2e380
       Handler: tweetToDynamo
       Runtime: go1.x
       Tracing: Active
@@ -26,10 +26,31 @@ Resources:
         Variables:
           PARAM1: VALUE
       Policies: AmazonDynamoDBFullAccess
+  DynamoToS3Function:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://masem.storage.sam.deploy/bbd6e7df8b6c7c4524770b6d2799cf26
+      Handler: dynamoToS3
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /upload
+            Method: POST
+      Environment:
+        Variables:
+          REGION: ap-northeast-1
+          S3_ENDPOINT: http://s3-ap-northeast-1.amazonaws.com/masem.storage.s3
+          S3_BUCKET: fromDynamo
+      Policies:
+      - AmazonDynamoDBFullAccess
+      - AmazonS3FullAccess
   HelloWorldFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://masem.storage.sam.deploy/026df836312dfff9ba4cff2facf68e57
+      CodeUri: s3://masem.storage.sam.deploy/3a142bf664425f20605a01fbe7aec895
       Handler: hello-world
       Runtime: go1.x
       Tracing: Active
