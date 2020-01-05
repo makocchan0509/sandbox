@@ -1,0 +1,9 @@
+#ssh鍵
+*.pem
+
+#build file
+build/
+
+#log
+*.log
+
