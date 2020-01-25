@@ -1,0 +1,14 @@
+{
+    "Statement":[
+      {
+        "Effect":"Allow",
+        "Action":["firehose:*"],
+        "Resource":["arn:aws:firehose:ap-northeast-1:437857420878:*"]
+      },
+      {
+        "Effect":"Allow",
+        "Action":["iam:PassRole"],
+        "Resource":["arn:aws:iam::437857420878:role/cloudwatchToKinesis"]
+      }
+    ]
+}
