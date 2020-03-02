@@ -99,10 +99,10 @@ func getTweet(req getTweetReq) (resultTweets []tweetList) {
 
 	var apiUrl string
 
-	consumerKey = "T0z98JPbNM2dUZcpjJ49ospqm"
-	consumerSecret = "GRWGxH72dbtSwqPOA2agLD9EFstHZszIS0dwJrB87DiOqsIsZU"
-	accessToken = "2441537754-WfJieUTiRsSb098u6RY2EMC5laxB6bzGyVI48Nq"
-	accessTokenSecret = "GXrKXibeCs0XHh4HMq5u3x4sxbqprxVSxx0vbOZGKtmAT"
+	consumerKey = ""
+	consumerSecret = ""
+	accessToken = ""
+	accessTokenSecret = ""
 
 	config := oauth1.NewConfig(consumerKey, consumerSecret)
 	token := oauth1.NewToken(accessToken, accessTokenSecret)
