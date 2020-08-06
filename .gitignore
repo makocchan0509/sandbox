@@ -1,6 +1,10 @@
 #ssh鍵
 *.pem
 
+#udemy
+udemy/
+gotraiding/
+
 #build file
 build/
 
