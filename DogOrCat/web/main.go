@@ -7,7 +7,6 @@ import (
 
 func main() {
 
-	//util.Logging(config.Env.LogPath, config.Config.LogFileName)
 	controller.StartWebServer(config.Env.Port)
 
 }

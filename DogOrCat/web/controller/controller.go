@@ -1,9 +1,11 @@
 package controller
 
 import (
+	"encoding/json"
 	"html/template"
 	"log"
 	"net/http"
+	"projects/DogOrCat/web/common/dao"
 )
 
 func StartWebServer(port string) error {
@@ -31,7 +33,43 @@ func questionHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func answerHandler(w http.ResponseWriter, r *http.Request) {
-	//fmt.Println("answer", r.FormValue("answer"))
+type APIResponse struct {
+	Result     string `json:"result"`
+	ErrMessage string `json:"errMessage"`
+}
 
+func answerHandler(w http.ResponseWriter, r *http.Request) {
+
+	log.Println("answer", r.FormValue("answer"))
+
+	var response APIResponse
+
+	rcon, err := dao.GetConnectionRedis()
+
+	if err != nil {
+		log.Println("failed redis connection", err.Error())
+		response = APIResponse{
+			Result:     "OK",
+			ErrMessage: err.Error(),
+		}
+
+	} else {
+		setKey := "dogCat"
+		dao.SetRedis(setKey, r.FormValue("answer"), rcon)
+		response = APIResponse{
+			Result: "OK",
+		}
+	}
+
+	log.Println(response)
+	output, err := json.Marshal(response)
+
+	log.Println(string(output))
+	if err != nil {
+		log.Println("failed json marchal", err.Error())
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(output)
 }

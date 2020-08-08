@@ -55,7 +55,8 @@
                     type: 'POST',
                     data:{
                         'answer':$('input[name=dogorcat]:checked').val()
-                    }
+                    },
+                    dataType:"json",
                 })
                 .done((data) => {
                     console.log('success',data)
@@ -67,6 +68,18 @@
                 });
             });
         });
+
+        function send(){
+            $.get("./getdata").done(function(data){
+                console.log("success",data)
+            })
+        }
+
+        
+        //setInterval(send, 1000 * 3)
+        //window.onload = function () {
+        //    send()
+        //}
     </script>
 
 </body>

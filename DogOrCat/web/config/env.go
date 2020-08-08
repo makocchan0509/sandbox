@@ -1,8 +1,9 @@
 package config
 
 type EnvList struct {
-	LogPath string
-	Port    string
+	Port      string
+	RedisHost string
+	RedisPort string
 }
 
 var Env EnvList
@@ -10,13 +11,15 @@ var Env EnvList
 func init() {
 	/*
 		Env = EnvList{
-			LogPath: os.Getenv("APP_LOGPATH"),
 			Port:    os.Getenv("APP_PORT"),
+			RedisHost:	os.Getenv("REDIS_HOST")
+			RedisPort:	os.Getenv("REDIS_PORT")
 		}
 	*/
 	Env = EnvList{
-		//LogPath: ".",
-		Port: "8080",
+		Port:      "8080",
+		RedisHost: "127.0.0.1",
+		RedisPort: "6379",
 	}
 
 }
