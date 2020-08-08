@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <style>
+        .card {
+            float: left;
+        }
+        #dogCard {
+        }
+        #catCard {    
+        }
+        .buttonU {
+            clear: both;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="qa">
+        <h3>Which do you like?</h3>
+            <div class="card" id="dogCard" style="width: 18rem;">
+                <img src="../resources/dog.jpeg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Dog</h5>
+                  <p class="card-text">Dog is cute.</p>
+                  <input type="radio" class="" name="dogorcat" value="dog">Select
+                </div>
+            </div>
+            <div class="card" id="catCard" style="width: 18rem;">
+                <img src="../resources/cat.jpeg" class="card-img-top" alt="..." height="215" width="200">
+                <div class="card-body">
+                  <h5 class="card-title">Cat</h5>
+                  <p class="card-text">Cat is cool.</p>
+                  <input type="radio" class="" name="dogorcat" value="cat" checked>Select
+                </div>
+            </div>
+            <br>
+            <p class="buttonU">
+                <input type="button" id="sendAnswer" class="btn btn-primary" value="send">
+            </p>
+    </div>
+
+    <script type="text/javascript">
+        $(function(){
+            $('#sendAnswer').click(
+                function(){
+                $.ajax({
+                    url: './answer',
+                    type: 'POST',
+                    data:{
+                        'answer':$('input[name=dogorcat]:checked').val()
+                    }
+                })
+                .done((data) => {
+                    console.log('success',data)
+                })
+                .fail((data) => {
+                    console.log('fail',data)
+                })
+                .always((data) =>{
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
