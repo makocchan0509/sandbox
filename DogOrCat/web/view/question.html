@@ -45,8 +45,9 @@
                 <input type="button" id="sendAnswer" class="btn btn-primary" value="send">
             </p>
     </div>
-    <div id="result">
-    </div>
+
+    
+    <div id="result"></div>
 
     <script type="text/javascript">
         $(function(){
@@ -74,11 +75,15 @@
         function send(){
             $.get("./result").done(function(data){
                 console.log("success",data)
+                $("#result").empty();
+                $("#result").append('<li id="out"> Dog:'+data.dogprct+'% </li>');
+                $("#result").append('<li id="out"> Cat:'+data.catprct+'% </li>');
+                $("#result").append('<li id="out"> Total:'+data.total+'件 </li>');
             })
         }
 
         setInterval(send, 1000 * 3)
-        
+
         window.onload = function () {
             send()
         }
