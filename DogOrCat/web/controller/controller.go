@@ -5,7 +5,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"projects/DogOrCat/web/common/dao"
+	"projects/DogOrCat/web/common/rabbitMQ"
 )
 
 func StartWebServer(port string) error {
@@ -14,6 +14,7 @@ func StartWebServer(port string) error {
 	http.Handle("/resources/", http.StripPrefix("/resources/", http.FileServer(http.Dir("resources/"))))
 	http.HandleFunc("/question", apiMakerHandler(questionHandler))
 	http.HandleFunc("/answer", apiMakerHandler(answerHandler))
+	http.HandleFunc("/result", apiMakerHandler(resultHandler))
 	return http.ListenAndServe(":"+port, nil)
 }
 
@@ -44,21 +45,16 @@ func answerHandler(w http.ResponseWriter, r *http.Request) {
 
 	var response APIResponse
 
-	rcon, err := dao.GetConnectionRedis()
+	err := rabbitMQ.PublishMessage(r.FormValue("answer"))
 
 	if err != nil {
-		log.Println("failed redis connection", err.Error())
 		response = APIResponse{
-			Result:     "OK",
+			Result:     "NG",
 			ErrMessage: err.Error(),
 		}
-
-	} else {
-		setKey := "dogCat"
-		dao.SetRedis(setKey, r.FormValue("answer"), rcon)
-		response = APIResponse{
-			Result: "OK",
-		}
+	}
+	response = APIResponse{
+		Result: "OK",
 	}
 
 	log.Println(response)
@@ -72,4 +68,8 @@ func answerHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(output)
+}
+
+func resultHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("called resulthandler")
 }

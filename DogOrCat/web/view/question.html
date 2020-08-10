@@ -45,6 +45,8 @@
                 <input type="button" id="sendAnswer" class="btn btn-primary" value="send">
             </p>
     </div>
+    <div id="result">
+    </div>
 
     <script type="text/javascript">
         $(function(){
@@ -70,16 +72,16 @@
         });
 
         function send(){
-            $.get("./getdata").done(function(data){
+            $.get("./result").done(function(data){
                 console.log("success",data)
             })
         }
 
+        setInterval(send, 1000 * 3)
         
-        //setInterval(send, 1000 * 3)
-        //window.onload = function () {
-        //    send()
-        //}
+        window.onload = function () {
+            send()
+        }
     </script>
 
 </body>

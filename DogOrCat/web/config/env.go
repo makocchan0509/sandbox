@@ -1,9 +1,11 @@
 package config
 
 type EnvList struct {
-	Port      string
-	RedisHost string
-	RedisPort string
+	Port        string
+	RabbitUrl   string
+	RabbitUser  string
+	RabbitPass  string
+	RabbitQName string
 }
 
 var Env EnvList
@@ -12,14 +14,18 @@ func init() {
 	/*
 		Env = EnvList{
 			Port:    os.Getenv("APP_PORT"),
-			RedisHost:	os.Getenv("REDIS_HOST")
-			RedisPort:	os.Getenv("REDIS_PORT")
+			RabbitUrl: os.Getenv("RABBIT_URL"),
+			RabbitUser: os.Getenv("RABBIT_USER"),
+			RabbitPass: os.Getenv("RABBIT_PASSWORD"),
+			RabbitQName: os.Getenv("RABBIT_QUEUE_NAME")
 		}
 	*/
 	Env = EnvList{
-		Port:      "8080",
-		RedisHost: "127.0.0.1",
-		RedisPort: "6379",
+		Port:        "8080",
+		RabbitUrl:   "localhost:5672/",
+		RabbitUser:  "admin",
+		RabbitPass:  "password",
+		RabbitQName: "dogOrCatQ",
 	}
 
 }
