@@ -1,0 +1,8 @@
+rabbitMQ
+worker
+k8s
+
+.gitignore
+README.md
+.DS_Store
+.git

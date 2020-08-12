@@ -93,6 +93,8 @@ func resultHandler(w http.ResponseWriter, r *http.Request) {
 	rows, err := conn.Query(sql)
 	if err != nil {
 		log.Printf("Failed query %s", err.Error())
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 
 	var vote string
@@ -117,11 +119,18 @@ func resultHandler(w http.ResponseWriter, r *http.Request) {
 	var catPer float64
 
 	total := dogNum + catNum
-	dogPer = float64(dogNum) / float64(total)
-	catPer = float64(catNum) / float64(total)
 
-	res.DogPrct = int(dogPer * 100)
-	res.CatPrct = int(catPer * 100)
+	if total != 0 {
+		dogPer = float64(dogNum) / float64(total)
+		catPer = float64(catNum) / float64(total)
+
+		res.DogPrct = int(dogPer * 100)
+		res.CatPrct = int(catPer * 100)
+	} else {
+		res.DogPrct = 0
+		res.CatPrct = 0
+	}
+
 	res.Total = total
 	res.Result = "OK"
 
