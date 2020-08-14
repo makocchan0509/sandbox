@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: dogorcat
+    type: webapp
+  name: webapp-svc
+  namespace: default
+spec:
+  ports:
+  - name: app-port
+    port: 80
+    targetPort: 8080
+  selector:
+    app: dogorcat
+    type: webapp
+  type: ClusterIP

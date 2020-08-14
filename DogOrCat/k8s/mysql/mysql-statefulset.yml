@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+       storage: 100Mi
+  storageClassName: slow
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: mysql
+  name: mysql-statefulset
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  serviceName: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: mysql
+        image: mysql:latest
+        ports:
+        - containerPort: 3306
+          name: mysql
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: root
+          - name: MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                 name: secret-mysql
+                 key: username
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                 name: secret-mysql
+                 key: password
+          - name: MYSQL_DATABASE
+            valueFrom:
+              configMapKeyRef:
+                 name: config-mysql
+                 key: dbName
+          - name: TZ
+            value: 'Asia/Tokyo'
+        args:
+        - --character-set-server=utf8mb4
+        - --collation-server=utf8mb4_unicode_ci
+        volumeMounts:
+        - name: mysql-volume
+          mountPath: /var/lib/mysql
+      volumes:
+       - name: mysql-volume
+         persistentVolumeClaim:
+            claimName: mysql-pvc
+

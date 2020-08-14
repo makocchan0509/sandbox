@@ -13,6 +13,7 @@
 ## RabbitMQ
  - deployment
  - Service(ClusterIP)
+ - Service(NodePort) 
 
 ## Go-worker
  - deployment
@@ -31,3 +32,6 @@
 
 ## Ingress
  - Ingress
+
+---
+

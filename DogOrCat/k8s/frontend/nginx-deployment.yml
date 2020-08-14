@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dogorcat
+    type: frontend
+  name: nginx-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dogorcat
+      type: frontend
+  template:
+    metadata:
+      labels:
+        app: dogorcat
+        type: frontend
+    spec:
+      containers:
+      - image: go-nginx:k8s-1.0
+        name: nginx-deployment
+        ports:
+        - containerPort: 80
+          name: web-listen

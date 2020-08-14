@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dogorcat
+    type: webapp
+  name: go-webapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dogorcat
+      type: webapp
+  template:
+    metadata:
+      labels:
+        app: dogorcat
+        type: webapp
+    spec:
+      containers:
+      - image: go-webapp:1.1
+        name: go-webapp
+        env:
+          - name: RABBIT_URL
+            valueFrom:
+              configMapKeyRef:
+                 name: config-rabbitmq
+                 key: url
+          - name: RABBIT_USER
+            valueFrom:
+              secretKeyRef:
+                 name: secret-rabbitmq
+                 key: username
+          - name: RABBIT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                 name: secret-rabbitmq
+                 key: password
+          - name: RABBIT_QUEUE_NAME
+            valueFrom:
+              configMapKeyRef:
+                 name: config-rabbitmq
+                 key: queueName
+          - name: MYSQL_HOST
+            valueFrom:
+              configMapKeyRef:
+                 name: config-mysql
+                 key: host
+          - name: MYSQL_PORT
+            valueFrom:
+              configMapKeyRef:
+                 name: config-mysql
+                 key: port
+          - name: MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                 name: secret-mysql
+                 key: username
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                 name: secret-mysql
+                 key: password
+          - name: MYSQL_DBNAME
+            valueFrom:
+              configMapKeyRef:
+                 name: config-mysql
+                 key: dbName
+          - name: APP_PORT
+            value: "8080"
+        ports:
+        - containerPort: 8080
+          name: app-port
+

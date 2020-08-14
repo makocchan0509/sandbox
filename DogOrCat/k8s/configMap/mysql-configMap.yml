@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-mysql
+data:
+  host: "mysql-svc"
+  port: "3306"
+  dbName: "dogorcat"
+
