@@ -21,20 +21,19 @@ type envList struct {
 	MysqlDBName string
 }
 
-/*
 var env = envList{
 	RabbitUrl:   "localhost:5672/",
 	RabbitUser:  "admin",
 	RabbitPass:  "password",
 	RabbitQName: "dogOrCatQ",
 	MysqlHost:   "localhost",
-	MysqlPort:   "3206",
+	MysqlPort:   "3306",
 	MysqlUser:   "admin",
 	MysqlPass:   "password",
 	MysqlDBName: "dogorcat",
 }
-*/
 
+/*
 var env = envList{
 	RabbitUrl:   os.Getenv("RABBIT_URL"),
 	RabbitUser:  os.Getenv("RABBIT_USER"),
@@ -46,6 +45,7 @@ var env = envList{
 	MysqlPass:   os.Getenv("MYSQL_PASSWORD"),
 	MysqlDBName: os.Getenv("MYSQL_DBNAME"),
 }
+*/
 
 func main() {
 	subscribeMessage()
