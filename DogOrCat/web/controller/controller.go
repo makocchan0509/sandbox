@@ -12,6 +12,9 @@ import (
 func StartWebServer(port string) error {
 
 	log.Println("Running web server ...")
+
+	dao.SetUpDB()
+
 	http.Handle("/resources/", http.StripPrefix("/resources/", http.FileServer(http.Dir("resources/"))))
 	http.HandleFunc("/question", apiMakerHandler(questionHandler))
 	http.HandleFunc("/answer", apiMakerHandler(answerHandler))
